@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Toro Project Build Details</title>
+    <style>
+        :root {
+            --grid-color: #e0e0e0;
+            --ink-color: #2c3e50;
+        }
+
+        body {
+            background-color: #fdfdfd;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--ink-color);
+            margin: 40px;
+        }
+
+        .notebook-page {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border: 1px solid #dcdcdc;
+        }
+
+        h1 {
+            border-bottom: 2px solid var(--ink-color);
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .task-list {
+            margin-top: 30px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .task-item input[type="checkbox"] {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .metadata {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="notebook-page">
+    <h1>El Toro Project: Page 1</h1>
+    <div id="project-container" class="task-list">
+        <p>Loading build specifications...</p>
+    </div>
+</div>
+
+<script>
+    // Fetch the external JSON file
+    async function loadProjectData() {
+        try {
+            const response = await fetch('data.json');
+            if (!response.ok) throw new Error('Could not find data.json');
+            
+            const data = await response.json();
+            renderTasks(data);
+        } catch (error) {
+            document.getElementById('project-container').innerHTML = 
+                `<p style="color:red;">Error: ${error.message}</p>`;
+        }
+    }
+
+    function renderTasks(tasks) {
+        const container = document.getElementById('project-container');
+        container.innerHTML = ''; // Clear loading message
+
+        tasks.forEach(task => {
+            const div = document.createElement('div');
+            div.className = 'task-item';
+            div.innerHTML = `
+                <input type="checkbox" ${task.status === 'complete' ? 'checked' : ''}>
+                <span><strong>${task.part}</strong>: ${task.description}</span>
+                <span class="metadata">ID: ${task.id}</span>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // Initialize
+    loadProjectData();
+</script>
+
+</body>
+</html>
