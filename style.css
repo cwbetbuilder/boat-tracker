@@ -1,0 +1,480 @@
+/* style.css - El Toro Boat Building Project Tracker Style System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Color Palette (Ocean & Wood Theme) */
+  --primary-navy: #1b365d;        /* Deep Ocean Navy */
+  --primary-navy-light: #2c4d75;
+  --accent-wood: #a66a38;         /* Warm Teak/Oak Wood */
+  --accent-wood-light: #c28854;
+  --accent-wood-dark: #7a461c;
+  --bg-sand: #f8f6f2;             /* Off-white Sand background */
+  --bg-white: #ffffff;
+  --text-dark: #2c3e50;           /* Soft charcoal for readability */
+  --text-muted: #627284;
+  --border-color: #e2e8f0;
+  
+  /* Status Colors */
+  --color-complete: #2e7d32;      /* Leaf green for complete steps */
+  --color-complete-bg: #e8f5e9;
+  --color-incomplete: #e2e8f0;    /* Light gray for incomplete */
+  
+  /* Layout Dimensions */
+  --container-width: 1200px;
+  --border-radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-sand);
+  color: var(--text-dark);
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+
+/* Header & Banner */
+header {
+  background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-navy-light) 100%);
+  color: var(--bg-white);
+  padding: 50px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 80% 20%, rgba(194, 136, 84, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.header-container {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+header h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.logo-placeholder {
+  width: 120px;
+  height: 120px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 4px solid var(--accent-wood);
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-navy);
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.logo-placeholder svg {
+  width: 70px;
+  height: 70px;
+  fill: var(--primary-navy);
+}
+
+header p {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Main Container */
+main {
+  max-width: var(--container-width);
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* Introduction Section */
+.intro-section {
+  background-color: var(--bg-white);
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  border-left: 5px solid var(--accent-wood);
+}
+
+.intro-section h2 {
+  font-family: 'Outfit', sans-serif;
+  color: var(--primary-navy);
+  margin-bottom: 12px;
+}
+
+.intro-section p {
+  color: var(--text-dark);
+  font-size: 1.05rem;
+}
+
+/* Project Tracker Table */
+.table-container {
+  background-color: var(--bg-white);
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+  margin-bottom: 40px;
+  border: 1px solid var(--border-color);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th {
+  background-color: var(--primary-navy);
+  color: var(--bg-white);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  padding: 18px 15px;
+  text-align: center;
+}
+
+th:first-child {
+  text-align: left;
+  padding-left: 25px;
+  width: 45%;
+}
+
+td {
+  padding: 14px 15px;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+td:first-child {
+  padding-left: 25px;
+}
+
+td.boat-col {
+  text-align: center;
+  width: 11%;
+}
+
+/* Hierarchical Row Styling */
+tr.phase-row {
+  background-color: #f1f5f9;
+  font-weight: 700;
+  font-size: 1.1rem;
+  font-family: 'Outfit', sans-serif;
+  color: var(--primary-navy);
+  border-bottom: 2px solid var(--border-color);
+}
+
+tr.phase-row td {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+tr.component-row {
+  background-color: #fafbfc;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--accent-wood-dark);
+}
+
+tr.component-row td:first-child {
+  padding-left: 45px; /* Indent component */
+}
+
+tr.step-row {
+  font-size: 0.95rem;
+}
+
+tr.step-row td:first-child {
+  padding-left: 65px; /* Indent step */
+}
+
+tr.step-row a {
+  color: var(--primary-navy-light);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px dashed var(--primary-navy-light);
+  transition: all 0.2s ease;
+}
+
+tr.step-row a:hover {
+  color: var(--accent-wood);
+  border-bottom-color: var(--accent-wood);
+}
+
+/* Expand / Collapse Arrows */
+.toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.toggle-btn:hover {
+  color: var(--accent-wood);
+}
+
+.collapsed .toggle-btn {
+  transform: rotate(-90deg);
+}
+
+/* Hiding collapsed items */
+.hidden-row {
+  display: none;
+}
+
+/* Custom Checkboxes */
+.checkbox-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.custom-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #cbd5e1;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: var(--bg-white);
+  position: relative;
+}
+
+/* Complete State styling */
+.checkbox-container.checked .custom-checkbox {
+  background-color: var(--color-complete);
+  border-color: var(--color-complete);
+}
+
+.checkbox-container.checked .custom-checkbox::after {
+  content: "";
+  width: 5px;
+  height: 10px;
+  border: solid var(--bg-white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  position: absolute;
+  top: 3px;
+}
+
+/* Hover highlights for active columns */
+tr:hover {
+  background-color: rgba(194, 136, 84, 0.03);
+}
+
+/* Footer / Contact Section */
+footer {
+  background-color: var(--primary-navy);
+  color: var(--bg-white);
+  padding: 40px 20px;
+  text-align: center;
+  margin-top: 60px;
+  border-top: 4px solid var(--accent-wood);
+}
+
+.footer-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.footer-content h3 {
+  font-family: 'Outfit', sans-serif;
+  margin-bottom: 10px;
+}
+
+.footer-content p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 15px;
+}
+
+.contact-info {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Page 2: Step Details Layout */
+.step-details-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 900px) {
+  .step-details-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.step-card {
+  background-color: var(--bg-white);
+  border-radius: var(--border-radius);
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-top: 4px solid var(--accent-wood);
+}
+
+.step-card h2 {
+  font-family: 'Outfit', sans-serif;
+  color: var(--primary-navy);
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.step-card h3 {
+  font-family: 'Outfit', sans-serif;
+  color: var(--accent-wood-dark);
+  margin: 15px 0 10px;
+  font-size: 1.1rem;
+}
+
+.step-card ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.step-card ul li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+}
+
+.step-card ul li::before {
+  content: "•";
+  color: var(--accent-wood);
+  font-weight: bold;
+  font-size: 1.2rem;
+  position: absolute;
+  left: 5px;
+  top: -2px;
+}
+
+.step-card ol {
+  padding-left: 20px;
+}
+
+.step-card ol li {
+  margin-bottom: 10px;
+  padding-left: 5px;
+}
+
+/* Drawings and Documents */
+.drawing-container {
+  background-color: #f1f5f9;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pdf-icon {
+  width: 48px;
+  height: 48px;
+  color: #dc2626;
+  margin-bottom: 10px;
+}
+
+.drawing-link {
+  color: var(--primary-navy);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.drawing-link:hover {
+  color: var(--accent-wood);
+}
+
+/* Images Grid */
+.images-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.step-img-container {
+  background-color: #e2e8f0;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border: 1px dashed #cbd5e1;
+}
+
+.step-img-placeholder {
+  text-align: center;
+  padding: 10px;
+}
+
+.step-img-placeholder svg {
+  width: 40px;
+  height: 40px;
+  fill: #94a3b8;
+  margin-bottom: 8px;
+}
+
+/* Navigation for Page 2 */
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-navy);
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 20px;
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--accent-wood);
+}

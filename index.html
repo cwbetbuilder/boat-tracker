@@ -1,195 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Toro Project Tracker - Page 1</title>
-    <style>
-        :root { --paper: #fdfaf0; --ink: #2c3e50; --accent: #d35400; --grid: #e0dcd0; }
-        body { background-color: #d6d2c4; font-family: 'Segoe UI', Tahoma, sans-serif; color: var(--ink); margin: 0; padding: 20px; }
-        
-        .notebook-page {
-            background: var(--paper);
-            background-image: linear-gradient(var(--grid) 1px, transparent 1px), 
-                              linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-            background-size: 25px 25px;
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 50px;
-            border-left: 15px solid #2c3e50;
-            box-shadow: 10px 10px 25px rgba(0,0,0,0.2);
-            position: relative;
-        }
-
-        header { text-align: center; border-bottom: 2px solid var(--ink); margin-bottom: 30px; padding-bottom: 20px; }
-        
-        table { width: 100%; border-collapse: collapse; background: rgba(255, 255, 255, 0.8); table-layout: fixed; }
-        th { background: var(--ink); color: white; padding: 12px; font-size: 0.8em; text-transform: uppercase; }
-        td { border: 1px solid var(--grid); padding: 8px; overflow: hidden; text-overflow: ellipsis; }
-
-        .phase-row { background: #d5dbdb; font-weight: bold; cursor: pointer; }
-        .component-row { background: #ebf5fb; font-weight: bold; cursor: pointer; }
-        .step-row { background: white; }
-
-        .indent-1 { padding-left: 30px; }
-        .indent-2 { padding-left: 60px; }
-
-        .toggle-icon { display: inline-block; width: 15px; transition: 0.2s; font-family: monospace; }
-        .collapsed .toggle-icon { transform: rotate(-90deg); }
-
-        .boat-col { text-align: center; width: 80px; }
-        input[type="checkbox"] { transform: scale(1.2); cursor: pointer; }
-        
-        a.step-link { color: #2e86c1; text-decoration: none; font-size: 0.95em; }
-        a.step-link:hover { text-decoration: underline; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Toro Boat Building Project Tracker</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="notebook-page">
-    <header>
-        <div style="border: 2px solid var(--ink); display: inline-block; padding: 5px 20px; margin-bottom: 10px; font-weight: bold;">CENTER FOR WOODEN BOATS</div>
-        <h1>El Toro Project Tracking</h1>
-        <p>This is a project tracking site for our El Toro Project. Our goal is to build and launch five El Toro boats this spring. The following pages provide build instructions and build project tracking.</p>
-    </header>
+  <!-- Header Section with Logo Placeholder -->
+  <header>
+    <div class="header-container">
+      <div class="logo-placeholder" id="cwb-logo" title="Center for Wooden Boats">
+        <!-- SVG Sailboat Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+          <path d="M50,15 L50,75 M50,20 L80,65 L50,65 M50,25 L25,60 L50,60 M15,75 C25,85 75,85 85,75 Z" 
+                stroke="#1b365d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <h1 id="main-title">CWB El Toro Project Tracker</h1>
+      <p>Building tradition, one frame at a time.</p>
+    </div>
+  </header>
 
-    <div id="tracker-root"></div>
-    
-    <footer style="margin-top: 40px; text-align: center; font-size: 0.9em; border-top: 1px solid var(--ink); padding-top: 20px;">
-        Contact Us | El Toro Build Team
-    </footer>
-</div>
+  <main>
+    <!-- Project Description -->
+    <section class="intro-section" id="project-description-sec">
+      <h2>Project Overview</h2>
+      <p id="description-text">
+        This is a project tracking site for our El Toro Project. Our goal is to build and launch five El Toro boats this spring. The following pages provide build instructions and build project tracking.
+      </p>
+    </section>
 
-<!-- DATA SOURCE: FULL SUPPLIED JSON -->
-<script type="application/json" id="project-json">
-{
-  "Phase 1": {
-    "Assembly Framework": {
-      "Create the Building Frame": [],
-      "Attach transom panels": []
-    },
-    "Hull Assembly": {
-      "Cut Hull Panels": [],
-      "Build Cradle": [],
-      "Assemble and tack hull": [],
-      "Glue Up Tacked Hull": [],
-      "Fill and Fair Hull": [],
-      "Epoxy and Glass Hull": [],
-      "Fillet and tape interior": [],
-      "Cut Sheer and Transom": [],
-      "Sand and Epoxy Interior": []
-    }
-  },
-  "Phase 2": {
-    "Forward Knee and Aft knee": {
-      "Forward Knee": [],
-      "Install Forward Knee": [],
-      "Build Transom Knee": [],
-      "Install Transom Knee": []
-    },
-    "Daggerboard trunk and thwart": {
-      "Build Daggerboard Trunk": [],
-      "Install Daggerboard Trunk": [],
-      "Thwart Support": [],
-      "Cut Thwart": [],
-      "Install Thwart": []
-    },
-    "Deck": {
-      "Deck panel": [],
-      "Deck Support": []
-    },
-    "Quarter Knees and gunwales": {
-      "Prepare Gunwales": [],
-      "Build Quarter Knees": [],
-      "Install Quarter Knees": []
-    },
-    "Keel": {
-      "TBD": []
-    }
-  },
-  "Phase 3": {
-    "Daggerboard": { "TBD": [] },
-    "Rudder": { "TBD": [] }
-  },
-  "TBD": {
-    "Spars": { "TBD": [] },
-    "Spray shield": { "TBD": [] }
-  }
-}
-</script>
+    <!-- Project Tracking Grid -->
+    <section class="tracker-section">
+      <div class="table-container">
+        <table id="tracker-table">
+          <thead>
+            <tr>
+              <th>Phase / Component / Step</th>
+              <th>Boat 1</th>
+              <th>Boat 2</th>
+              <th>Boat 3</th>
+              <th>Boat 4</th>
+              <th>Boat 5</th>
+            </tr>
+          </thead>
+          <tbody id="tracker-tbody">
+            <!-- Dynamic rows will be inserted here by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
 
-<script>
-    // In this script, we parse the JSON and build the table rows
-    const projectData = JSON.parse(document.getElementById('project-json').textContent);
+  <!-- Footer / Contact Us Section -->
+  <footer>
+    <div class="footer-content" id="footer-contact">
+      <h3>Contact Us</h3>
+      <p>Have questions about the El Toro builds or want to get involved with the boat building team?</p>
+      <div class="contact-info">
+        <p><strong>Center for Wooden Boats</strong></p>
+        <p>Email: el-toro-builds@cwb.org | Phone: (206) 555-0199</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Include data and metadata files -->
+  <script src="data.js"></script>
+  <script src="metadata.js"></script>
+
+  <!-- Table Renderer & Interactivity Script -->
+  <script>
     const boats = ["Boat 1", "Boat 2", "Boat 3", "Boat 4", "Boat 5"];
 
-    function renderTable() {
-        const root = document.getElementById('tracker-root');
-        let html = `<table><thead><tr><th style="width: 40%;">Structural Object Hierarchy</th>`;
-        boats.forEach(b => html += `<th class="boat-col">${b}</th>`);
-        html += `</tr></thead><tbody>`;
+    // Verify that data loaded correctly
+    if (typeof boatBuildData === 'undefined') {
+      console.error("Error: data.js failed to load or is missing.");
+    } else {
+      renderTrackerTable();
+    }
 
-        let pIdx = 0;
-        for (const phaseName in projectData) {
-            const pId = `p${pIdx}`;
+    // Helper to generate safe HTML IDs/Classes from names
+    function slugify(text) {
+      return text.toString().toLowerCase().trim()
+        .replace(/\s+/g, '_')           // Replace spaces with _
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '_');        // Replace multiple - with single _
+    }
+
+    function renderTrackerTable() {
+      const tbody = document.getElementById('tracker-tbody');
+      tbody.innerHTML = ''; // Clear existing placeholder content
+
+      // Loop through each Phase in boatBuildData
+      Object.entries(boatBuildData).forEach(([phaseName, components]) => {
+        const phaseSlug = slugify(phaseName);
+        
+        // 1. Create Phase Row
+        const phaseRow = document.createElement('tr');
+        phaseRow.className = 'phase-row';
+        phaseRow.dataset.phaseId = phaseSlug;
+        
+        let htmlContent = `
+          <td>
+            <button class="toggle-btn" onclick="togglePhase('${phaseSlug}')">▼</button>
+            ${phaseName}
+          </td>
+        `;
+        
+        // Render boat status checkboxes
+        boats.forEach(boat => {
+          // Look up progress in boatProgress, defaulting to false if not found
+          const isChecked = (typeof boatProgress !== 'undefined' && boatProgress[phaseName]) 
+            ? !!boatProgress[phaseName][boat] 
+            : false;
+          
+          const checkedClass = isChecked ? 'checked' : '';
+          htmlContent += `
+            <td class="boat-col">
+              <div class="checkbox-container ${checkedClass}" title="${boat} - ${phaseName}">
+                <div class="custom-checkbox"></div>
+              </div>
+            </td>
+          `;
+        });
+        
+        phaseRow.innerHTML = htmlContent;
+        tbody.appendChild(phaseRow);
+
+        // 2. Loop through each Component inside Phase
+        Object.entries(components).forEach(([compName, steps]) => {
+          const compSlug = slugify(compName);
+          
+          const compRow = document.createElement('tr');
+          compRow.className = 'component-row';
+          compRow.dataset.phaseId = phaseSlug;
+          compRow.dataset.compId = compSlug;
+          
+          let compHtml = `
+            <td>
+              <button class="toggle-btn" onclick="toggleComponent('${compSlug}')">▼</button>
+              ${compName}
+            </td>
+          `;
+          
+          boats.forEach(boat => {
+            const isChecked = (typeof boatProgress !== 'undefined' && boatProgress[compName])
+              ? !!boatProgress[compName][boat]
+              : false;
+              
+            const checkedClass = isChecked ? 'checked' : '';
+            compHtml += `
+              <td class="boat-col">
+                <div class="checkbox-container ${checkedClass}" title="${boat} - ${compName}">
+                  <div class="custom-checkbox"></div>
+                </div>
+              </td>
+            `;
+          });
+          
+          compRow.innerHTML = compHtml;
+          tbody.appendChild(compRow);
+
+          // 3. Loop through each Step inside Component
+          Object.entries(steps).forEach(([stepName, instructions]) => {
+            const stepSlug = slugify(stepName);
             
-            // Phase Row
-            html += `<tr class="phase-row" onclick="toggle('${pId}')">
-                <td><span class="toggle-icon" id="icon-${pId}">▼</span> ${phaseName}</td>
-                ${boats.map(() => `<td class="boat-col"><input type="checkbox"></td>`).join('')}
-            </tr>`;
-
-            let cIdx = 0;
-            const components = projectData[phaseName];
-            for (const compName in components) {
-                const cId = `${pId}c${cIdx}`;
+            const stepRow = document.createElement('tr');
+            stepRow.className = 'step-row';
+            stepRow.dataset.phaseId = phaseSlug;
+            stepRow.dataset.compId = compSlug;
+            stepRow.dataset.stepId = stepSlug;
+            
+            // Encode the step name as a URL query parameter for Page 2
+            const encodedStepName = encodeURIComponent(stepName);
+            let stepHtml = `
+              <td>
+                <a href="step-details.html?stepName=${encodedStepName}" target="_blank" title="View details for ${stepName}">
+                  ${stepName}
+                </a>
+              </td>
+            `;
+            
+            boats.forEach(boat => {
+              const isChecked = (typeof boatProgress !== 'undefined' && boatProgress[stepName])
+                ? !!boatProgress[stepName][boat]
+                : false;
                 
-                // Component Row
-                html += `<tr class="component-row ${pId}" onclick="toggle('${cId}')">
-                    <td class="indent-1"><span class="toggle-icon" id="icon-${cId}">▼</span> ${compName}</td>
-                    ${boats.map(() => `<td class="boat-col"><input type="checkbox"></td>`).join('')}
-                </tr>`;
-
-                // Step Rows
-                const steps = components[compName];
-                for (const stepName in steps) {
-                    const anchor = encodeURIComponent(stepName.replace(/\s+/g, '-'));
-                    html += `<tr class="step-row ${pId} ${cId}">
-                        <td class="indent-2">
-                            <a class="step-link" href="https://google.com#${anchor}">${stepName}</a>
-                        </td>
-                        ${boats.map(() => `<td class="boat-col"><input type="checkbox"></td>`).join('')}
-                    </tr>`;
-                }
-                cIdx++;
-            }
-            pIdx++;
-        }
-
-        html += `</tbody></table>`;
-        root.innerHTML = html;
+              const checkedClass = isChecked ? 'checked' : '';
+              stepHtml += `
+                <td class="boat-col">
+                  <div class="checkbox-container ${checkedClass}" title="${boat} - ${stepName}">
+                    <div class="custom-checkbox"></div>
+                  </div>
+                </td>
+              `;
+            });
+            
+            stepRow.innerHTML = stepHtml;
+            tbody.appendChild(stepRow);
+          });
+        });
+      });
     }
 
-    function toggle(id) {
-        const rows = document.getElementsByClassName(id);
-        const icon = document.getElementById(`icon-${id}`);
-        const isCollapsed = icon.style.transform === 'rotate(-90deg)';
-        
-        icon.style.transform = isCollapsed ? 'rotate(0deg)' : 'rotate(-90deg)';
-        
-        for (let row of rows) {
-            row.style.display = isCollapsed ? 'table-row' : 'none';
-            // Recursive collapse: if we hide a phase, hide all components and steps inside it
-            if (!isCollapsed && row.classList.contains('component-row')) {
-                const childId = row.onclick.toString().match(/'([^']+)'/)[1];
-                const childRows = document.getElementsByClassName(childId);
-                for(let cr of childRows) cr.style.display = 'none';
-                document.getElementById(`icon-${childId}`).style.transform = 'rotate(-90deg)';
-            }
-        }
+    // Toggle Phase (Collapses all Components and Steps under this Phase)
+    function togglePhase(phaseId) {
+      const clickedRow = document.querySelector(`tr.phase-row[data-phase-id="${phaseId}"]`);
+      const isCollapsing = !clickedRow.classList.contains('collapsed');
+      
+      if (isCollapsing) {
+        clickedRow.classList.add('collapsed');
+        const subRows = document.querySelectorAll(`tr[data-phase-id="${phaseId}"]:not(.phase-row)`);
+        subRows.forEach(row => {
+          row.classList.add('hidden-row');
+        });
+      } else {
+        clickedRow.classList.remove('collapsed');
+        const compRows = document.querySelectorAll(`tr.component-row[data-phase-id="${phaseId}"]`);
+        compRows.forEach(compRow => {
+          compRow.classList.remove('hidden-row');
+          
+          if (!compRow.classList.contains('collapsed')) {
+            const compId = compRow.dataset.compId;
+            const stepRows = document.querySelectorAll(`tr.step-row[data-comp-id="${compId}"]`);
+            stepRows.forEach(stepRow => {
+              stepRow.classList.remove('hidden-row');
+            });
+          }
+        });
+      }
     }
 
-    renderTable();
-</script>
+    // Toggle Component (Collapses all Steps under this Component)
+    function toggleComponent(compId) {
+      const clickedRow = document.querySelector(`tr.component-row[data-comp-id="${compId}"]`);
+      const isCollapsing = !clickedRow.classList.contains('collapsed');
+      
+      if (isCollapsing) {
+        clickedRow.classList.add('collapsed');
+        const stepRows = document.querySelectorAll(`tr.step-row[data-comp-id="${compId}"]`);
+        stepRows.forEach(row => {
+          row.classList.add('hidden-row');
+        });
+      } else {
+        clickedRow.classList.remove('collapsed');
+        const stepRows = document.querySelectorAll(`tr.step-row[data-comp-id="${compId}"]`);
+        stepRows.forEach(row => {
+          row.classList.remove('hidden-row');
+        });
+      }
+    }
+  </script>
 </body>
 </html>

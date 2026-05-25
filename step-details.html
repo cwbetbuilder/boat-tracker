@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Toro Build Step Details</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Simple Header -->
+  <header style="padding: 30px 20px;">
+    <div class="header-container">
+      <h1 id="step-title" style="font-size: 2.2rem; margin-bottom: 5px;">Build Step Details</h1>
+      <p id="step-context" style="font-size: 0.95rem; opacity: 0.85;"></p>
+    </div>
+  </header>
+
+  <main>
+    <!-- Close Tab Link -->
+    <a href="#" onclick="window.close(); return false;" class="nav-link">
+      <!-- SVG Arrow Left -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle;">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+      Close Details & Return to Tracker
+    </a>
+
+    <!-- Step Content Grid -->
+    <div class="step-details-container" id="content-grid" style="display: none;">
+      
+      <!-- Column 1: Instructions & Prerequisites -->
+      <div class="column-left">
+        <div class="step-card">
+          <h2>Prerequisites & Materials</h2>
+          
+          <h3>Prerequisites</h3>
+          <ul id="prerequisites-list">
+            <!-- Dynamic list -->
+          </ul>
+
+          <h3>Materials Required</h3>
+          <ul id="materials-list">
+            <!-- Dynamic list -->
+          </ul>
+        </div>
+
+        <div class="step-card" style="margin-top: 30px;">
+          <h2>Step Instructions</h2>
+          <ol id="instructions-list" style="padding-left: 20px;">
+            <!-- Dynamic list -->
+          </ol>
+        </div>
+      </div>
+
+      <!-- Column 2: Drawings & Images -->
+      <div class="column-right">
+        <div class="step-card">
+          <h2>Engineering & Assembly Drawings</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+            Click to view or print the engineering PDFs.
+          </p>
+
+          <h3>Part Drawing</h3>
+          <div class="drawing-container">
+            <!-- PDF Icon -->
+            <svg class="pdf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 48px; height: 48px; color: #dc2626; margin-bottom: 10px;">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1H9V9h3V7H7v10h4v-1zm5-4h-2v2h2c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1zm-2-3h2V7h-3v10h1v-4h2c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1h-2v1zm-7 4h1v1H7v-1z"/>
+            </svg>
+            <a id="drawing-link" href="#" target="_blank" class="drawing-link">
+              View Part Drawing (PDF)
+            </a>
+          </div>
+
+          <h3>Assembly Drawing</h3>
+          <div class="drawing-container">
+            <!-- PDF Icon -->
+            <svg class="pdf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 48px; height: 48px; color: #dc2626; margin-bottom: 10px;">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1H9V9h3V7H7v10h4v-1zm5-4h-2v2h2c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1zm-2-3h2V7h-3v10h1v-4h2c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1h-2v1zm-7 4h1v1H7v-1z"/>
+            </svg>
+            <a id="assembly-link" href="#" target="_blank" class="drawing-link">
+              View Assembly Drawing (PDF)
+            </a>
+          </div>
+        </div>
+
+        <div class="step-card" style="margin-top: 30px;">
+          <h2>Build Images</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+            Reference photographs from the build workshop.
+          </p>
+          <div class="images-grid" id="images-grid">
+            <!-- Dynamic images or placeholders -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Error State -->
+    <div class="step-card" id="error-card" style="display: none; text-align: center; padding: 50px 20px;">
+      <h2 style="color: #dc2626; border-bottom: none;">Step Not Found</h2>
+      <p>The build step details could not be loaded. Please return to the tracker and select a valid step.</p>
+    </div>
+  </main>
+
+  <!-- Include the master data and metadata files -->
+  <script src="data.js"></script>
+  <script src="metadata.js"></script>
+
+  <!-- Detail Loader Script -->
+  <script>
+    // Extract stepName from URL Query Parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const stepName = urlParams.get('stepName');
+
+    if (!stepName) {
+      showError();
+    } else {
+      loadStepDetails(decodeURIComponent(stepName));
+    }
+
+    function showError() {
+      document.getElementById('error-card').style.display = 'block';
+    }
+
+    function loadStepDetails(targetName) {
+      let foundStepInstructions = null;
+      let parentPhaseName = "";
+      let parentComponentName = "";
+
+      // Find the step in boatBuildData
+      if (typeof boatBuildData !== 'undefined') {
+        Object.entries(boatBuildData).forEach(([phaseName, components]) => {
+          Object.entries(components).forEach(([compName, steps]) => {
+            if (steps[targetName]) {
+              foundStepInstructions = steps[targetName];
+              parentPhaseName = phaseName;
+              parentComponentName = compName;
+            }
+          });
+        });
+      }
+
+      if (!foundStepInstructions) {
+        showError();
+        return;
+      }
+
+      // 1. Set Title and Context Header
+      document.getElementById('step-title').textContent = targetName;
+      document.getElementById('step-context').textContent = `${parentPhaseName}  >  ${parentComponentName}`;
+      document.title = `${targetName} - Build Details`;
+
+      // 2. Load step metadata from metadata.js if available, otherwise default to empty
+      const meta = (typeof stepDetailsMetadata !== 'undefined' && stepDetailsMetadata[targetName]) 
+        ? stepDetailsMetadata[targetName] 
+        : {
+            prerequisites: [],
+            materials: [],
+            drawing: "",
+            assembly: "",
+            images: []
+          };
+
+      // 3. Render Prerequisites
+      const prereqsList = document.getElementById('prerequisites-list');
+      prereqsList.innerHTML = '';
+      if (!meta.prerequisites || meta.prerequisites.length === 0) {
+        prereqsList.innerHTML = '<li style="list-style-type: none; font-style: italic; color: var(--text-muted); padding-left: 0;">None documented yet.</li>';
+      } else {
+        meta.prerequisites.forEach(pre => {
+          const li = document.createElement('li');
+          li.textContent = pre;
+          prereqsList.appendChild(li);
+        });
+      }
+
+      // 4. Render Materials
+      const materialsList = document.getElementById('materials-list');
+      materialsList.innerHTML = '';
+      if (!meta.materials || meta.materials.length === 0) {
+        materialsList.innerHTML = '<li style="list-style-type: none; font-style: italic; color: var(--text-muted); padding-left: 0;">None documented yet.</li>';
+      } else {
+        meta.materials.forEach(mat => {
+          const li = document.createElement('li');
+          li.textContent = mat;
+          materialsList.appendChild(li);
+        });
+      }
+
+      // 5. Render Instructions
+      const instructionsList = document.getElementById('instructions-list');
+      instructionsList.innerHTML = '';
+      foundStepInstructions.forEach(item => {
+        const li = document.createElement('li');
+        li.style.marginBottom = "15px";
+        
+        let htmlStr = `${item.instruction}`;
+        
+        // If there's an extra comment/assembly drawing file notes in instruction (e.g. SGH comment)
+        if (item.assemblyDrawingFile) {
+          htmlStr += `<div style="margin-top: 6px; padding: 10px; background-color: #fffbeb; border-left: 3px solid #d97706; font-size: 0.85rem; color: #b45309;">
+            <strong>Note:</strong> ${item.assemblyDrawingFile.replace(/\n/g, '<br>')}
+          </div>`;
+        }
+        
+        li.innerHTML = htmlStr;
+        instructionsList.appendChild(li);
+      });
+
+      // 6. Render Drawings links (hide parent container if not defined)
+      const drawingLink = document.getElementById('drawing-link');
+      if (meta.drawing) {
+        drawingLink.href = meta.drawing;
+        drawingLink.textContent = `View ${targetName} Drawing (PDF)`;
+        drawingLink.parentElement.style.display = 'flex';
+      } else {
+        drawingLink.parentElement.style.display = 'none';
+      }
+
+      const assemblyLink = document.getElementById('assembly-link');
+      if (meta.assembly) {
+        assemblyLink.href = meta.assembly;
+        assemblyLink.textContent = `View ${parentComponentName} Assembly Drawing (PDF)`;
+        assemblyLink.parentElement.style.display = 'flex';
+      } else {
+        assemblyLink.parentElement.style.display = 'none';
+      }
+
+      // Hide the entire drawings card if both are missing
+      if (!meta.drawing && !meta.assembly) {
+        drawingLink.closest('.step-card').style.display = 'none';
+      } else {
+        drawingLink.closest('.step-card').style.display = 'block';
+      }
+
+      // 7. Render Images Grid
+      const imagesGrid = document.getElementById('images-grid');
+      imagesGrid.innerHTML = '';
+      
+      if (!meta.images || meta.images.length === 0) {
+        // Hide the images section if no images are specified
+        imagesGrid.closest('.step-card').style.display = 'none';
+      } else {
+        imagesGrid.closest('.step-card').style.display = 'block';
+        meta.images.forEach((imgSrc, index) => {
+          const container = document.createElement('div');
+          container.className = 'step-img-container';
+          
+          // Fallback display
+          container.innerHTML = `
+            <div class="step-img-placeholder">
+              <svg viewBox="0 0 24 24" style="width: 40px; height: 40px; fill: #94a3b8; margin-bottom: 8px;">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+              </svg>
+              <div>Image ${index + 1} Placeholder</div>
+              <div style="font-size: 0.75rem; color:#94a3b8; margin-top:4px; font-family: monospace;">${imgSrc}</div>
+            </div>
+          `;
+          
+          // Try to load the image dynamically
+          const img = new Image();
+          img.src = imgSrc;
+          img.onload = () => {
+            container.innerHTML = `<img src="${imgSrc}" alt="${targetName} Image ${index + 1}" style="width:100%; height:100%; object-fit:cover;">`;
+          };
+
+          imagesGrid.appendChild(container);
+        });
+      }
+
+      // Show content grid
+      document.getElementById('content-grid').style.display = 'grid';
+    }
+  </script>
+</body>
+</html>
